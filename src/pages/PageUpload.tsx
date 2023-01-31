@@ -1,19 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-interface IFormFields {
-	title: string;
-	description: string;
-	notes: string;
-}
-
-interface IFileItem {
-	title: string;
-	description: string;
-	notes: string;
-	fileName: string;
-	iconPathAndFileName: string;
-}
+import { IFormFields, IFileItem } from '../interfaces';
 
 const backendUrl = 'http://localhost:5891';
 const _initialFormFields = {

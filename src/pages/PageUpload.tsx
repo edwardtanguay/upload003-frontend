@@ -84,8 +84,7 @@ export const PageUpload = () => {
 	};
 
 	return (
-		<div className="App">
-			<h1>File Uploader</h1>
+		<div className="page pageUpload">
 			<main>
 				<section>
 					<form id="mainForm" onSubmit={handleSubmit}>

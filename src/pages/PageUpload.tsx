@@ -1,63 +1,9 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { IFormFields, IFileItem, _initialFormFields, _initialUploadFile } from '../interfaces';
+import { useContext } from 'react';
+import { AppContext } from '../AppContext';
 import * as config from '../config';
 
 export const PageUpload = () => {
-	const [uploadFile, setUploadFile] = useState({ ..._initialUploadFile });
-	const [formFields, setFormFields] = useState({ ..._initialFormFields });
-	const [status, setStatus] = useState('');
-	const [fileItems, setFileItems] = useState<IFileItem[]>([]);
-
-	const fetchFileItems = () => {
-		(async () => {
-			setFileItems((await axios.get(`${config.backendUrl}/fileitems`)).data);
-		})();
-	};
-
-	useEffect(() => {
-		fetchFileItems();
-	}, []);
-
-	// TODO: resolve all TypeScript anys on this page 
-	const handleSubmit = async (e: any) => {
-		e.preventDefault();
-		if (uploadFile.data && formFields.title.trim() !== '') {
-			e.preventDefault();
-			let formData = new FormData();
-			formData.append('file', uploadFile.data);
-			formData.append('title', formFields.title);
-			formData.append('description', formFields.description);
-			formData.append('notes', formFields.notes);
-			formData.append('fileName', (uploadFile.data as any).name);
-			const response = await fetch(`${config.backendUrl}/uploadfile`, {
-				method: 'POST',
-				body: formData,
-			});
-			if (response) setStatus(response.statusText);
-			(document.getElementById('mainForm') as any).reset();
-			setFormFields({ ..._initialFormFields });
-			setUploadFile({ ..._initialUploadFile });
-			fetchFileItems();
-		}
-	};
-
-	const handleFileChange = (e: any) => {
-		const file = e.target.files[0];
-		setStatus('');
-		const _uploadFile = {
-			name: file.name,
-			preview: URL.createObjectURL(file),
-			data: e.target.files[0],
-		};
-		setUploadFile(_uploadFile);
-	};
-
-	const handleFormFieldChange = (e: any, fieldName: string) => {
-		const value = e.target.value;
-		formFields[fieldName as keyof IFormFields] = value;
-		setFormFields({ ...formFields });
-	};
+	const { handleSubmit, formFields, handleFormFieldChange, handleFileChange, uploadFile, fileItems } = useContext(AppContext);
 
 	return (
 		<div className="page pageUpload">

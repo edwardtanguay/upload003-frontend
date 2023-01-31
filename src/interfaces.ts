@@ -12,6 +12,12 @@ export interface IFileItem {
 	iconPathAndFileName: string;
 }
 
+export interface IUploadFile {
+	preview: string;
+	data: string;
+	name: string;
+}
+
 export const _initialFormFields = {
 	title: '',
 	description: '',

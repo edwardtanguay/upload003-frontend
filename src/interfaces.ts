@@ -12,3 +12,15 @@ export interface IFileItem {
 	iconPathAndFileName: string;
 }
 
+export const _initialFormFields = {
+	title: '',
+	description: '',
+	notes: '',
+};
+
+export const _initialUploadFile = {
+	preview: '',
+	data: '',
+	name: '',
+};
+
